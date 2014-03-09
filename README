@@ -1,0 +1,15 @@
+
+Directories:
+
+src/
+	The source files of the pure JS client.
+	Use the command `ngcompile doceo -u -o ../app/js/doceo.min.js`
+	to build the client .js file.
+
+app/
+	The package with package.json file and all assets like
+	js, html, css, fonts and all.
+
+build/
+	Empty at the beginning, but will contain the app.nw file
+	if the build script is used.
