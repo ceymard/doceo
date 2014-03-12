@@ -1,3 +1,5 @@
-app/js/doceo.min.js
-app/js/doceo.min.js.map
+*.min.js
+*.min.js.map
 build
+node_modules
+app/**/*.html
