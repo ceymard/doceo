@@ -10,15 +10,9 @@ html(ng-app='app')
         title Doceo v#{package.version}
         meta(charset='utf-8')
         meta(name="viewport" content="width=device-width")
+        <!-- inject:css -->
+        <!-- endinject -->
 
-        style(type='text/css').
-            h1 {
-                font-size: 3vmin;
-            }
-            #container {
-                width: 90vw;
-                margin: 0 auto;
-            }
     body(ng-include='"app-main"')
 
     script(src='./js/vendor/lodash/2.4.1/lodash.min.js')

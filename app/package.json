@@ -3,5 +3,6 @@
     "main": "main.html",
     "window": {
         "toolbar": false
-    }
+    },
+    "chromium-args": "--enable-directwrite"
 }
