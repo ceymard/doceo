@@ -19,11 +19,22 @@ module.factory('app', function () {
 
 module.run(['nw', 'app', '$optng.gestures', function (nw, app, gestures) {
 
+    var style = angular.element('<style>');
+    angular.element(document).find('head').append(style);
+
+    window.onresize = function () {
+        style.text("* { z-index: 1}");
+    };
+
     gestures({
         'ctrl+o': function open() {
             nw.openDialog().then(function (files) {
                 console.log(files);
             });
+        },
+        f12: function debug() {
+            var gui = require('nw.gui');
+            gui.Window.get().showDevTools();
         }
     });
 

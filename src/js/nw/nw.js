@@ -20,12 +20,15 @@ module.factory('nw',
     }
 
     return {
+
         window: function window(win) {
             return gui.Window.get(window);
         },
+
         open: function open(url) {
             return gui.Window.open(url);
         },
+
         openDialog: function (opts) {
             var input = get_fileinput();
             var deferred = $q.defer();
