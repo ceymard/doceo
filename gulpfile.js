@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var through = require('through2');
 
+var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
 var concat = require('gulp-concat');
@@ -21,9 +22,16 @@ var config = {
     scripts: __dirname + '/src/**/*.js',
     templates: __dirname + '/src/**/*.jade',
     styles: __dirname + '/src/**/*.styl',
-    js_dest: __dirname + '/app/js',
+    js_dest: __dirname + '/app/js/client',
     appname: 'app'
 };
+
+function logfile(msg, color) {
+    color = color || gutil.colors.yellow;
+    return tap(function (file) {
+        gutil.log(msg, color(file.path.replace(file.base, '')));
+    });
+}
 
 function angularTask(opts) {
     return function angularTask () {
@@ -40,9 +48,7 @@ function angularTask(opts) {
 
         var task = es.concat(sources, templates)
             .pipe(ngcompile(config.appname, {continuous: !opts.prod}))
-            .pipe(tap(function (file) {
-                gutil.log('processing', gutil.colors.yellow(file.path.replace(file.base, '')));
-            }));
+            .pipe(logfile('processing'))
 
         if (!opts.prod) {
             // in dev, we want to jslint our files.
@@ -57,7 +63,7 @@ function angularTask(opts) {
             task = task
                 .pipe(concat('app.js'))
                 .pipe(uglify())
-                .pipe(tap(function (file) { gutil.log('done writing', gutil.colors.green(file.path.replace(file.base, ''))); }))
+                .pipe(logfile('done writing', gutil.colors.green))
                 .pipe(gulp.dest(config.js_dest))
         }
 
@@ -76,7 +82,10 @@ function styleTask(opts) {
 }
 
 gulp.task('clean', function () {
-
+    return gulp.src([
+            config.js_dest
+        ], {read: false})
+        .pipe(clean());
 });
 
 gulp.task('build-angular-app-dev', angularTask({prod: false}));
