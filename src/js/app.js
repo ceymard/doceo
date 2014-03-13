@@ -1,8 +1,7 @@
 (function () {
 
 var module = angular.module('app', [
-    'ng',
-    'optng.jqueryui.tabs'
+    'ng'
 ]);
 
 module.run(function () {

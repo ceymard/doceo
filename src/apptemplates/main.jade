@@ -1,0 +1,13 @@
+doctype html
+html(ng-app='doceo')
+
+    head
+        title Doceo v{{ doceo.version }}
+        meta(charset='utf-8')
+
+    body(ng-include='tpl.main')
+
+    script(src='./js/vendor/lodash/2.1.4/lodash.min.js')
+    script(src='./js/vendor/angular/1.2.14/angular.min.js')
+    <!-- inject:js -->
+    <!-- endinject -->
