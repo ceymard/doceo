@@ -1,4 +1,7 @@
 {
     "name": "doceo",
-    "main": "main.html"
+    "main": "main.html",
+    "window": {
+        "toolbar": false
+    }
 }

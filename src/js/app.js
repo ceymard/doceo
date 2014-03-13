@@ -1,11 +1,32 @@
 (function () {
 
 var module = angular.module('app', [
-    'ng'
+    'ng',
+    'nw',
+    'app.tpl',
+    'optng.gestures'
 ]);
 
-module.run(function () {
+module.factory('app', function () {
+
+    function App() {
+
+    }
+
+    return new App();
 
 });
+
+module.run(['nw', 'app', '$optng.gestures', function (nw, app, gestures) {
+
+    gestures({
+        'ctrl+o': function open() {
+            nw.openDialog().then(function (files) {
+                console.log(files);
+            });
+        }
+    });
+
+}]);
 
 })();

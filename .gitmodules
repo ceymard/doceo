@@ -1,0 +1,3 @@
+[submodule "src/js/optng"]
+	path = src/js/optng
+	url = git@github.com:ceymard/optng

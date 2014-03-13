@@ -1,5 +1,6 @@
 {
   "name": "doceo",
+  "version": "0.1.0",
   "private": true,
   "description": "none for now",
   "devDependencies": {
@@ -8,7 +9,6 @@
     "gulp": "~3.5.5",
     "gulp-stylus": "0.0.14",
     "jshint-stylish": "~0.1.5",
-    "through2": "~0.4.1",
     "gulp-ngcompile": "^0.1.2",
     "gulp-jade": "^0.4.2",
     "event-stream": "^3.1.0",
@@ -17,7 +17,8 @@
     "gulp-util": "^2.2.14",
     "gulp-concat": "^2.1.7",
     "gulp-clean": "^0.2.4",
-    "gulp-inject": "^0.4.1"
+    "gulp-inject": "^0.4.1",
+    "gulp-zip": "^0.1.2"
   },
   "dependencies": {
     "gulp-plumber": "~0.5.6"

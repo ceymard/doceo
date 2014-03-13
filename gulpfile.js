@@ -1,5 +1,6 @@
+var fs = require('fs');
+
 var gulp = require('gulp');
-var through = require('through2');
 
 var clean = require('gulp-clean');
 var gutil = require('gulp-util');
@@ -14,6 +15,7 @@ var ngtemplates = require('gulp-ngtemplates');
 var jade = require('gulp-jade');
 var tap = require('gulp-tap');
 var inject = require('gulp-inject');
+var zip = require('gulp-zip');
 
 var es = require('event-stream');
 
@@ -36,6 +38,12 @@ function logfile(msg, color) {
     });
 }
 
+var package = JSON.parse(fs.readFileSync(__dirname + '/package.json'));
+var jade_config = {
+    debug: false,
+    package: package
+}
+
 function log_wrote() { return logfile('wrote', gutil.colors.green); }
 function log_processed() { return logfile('processed'); }
 function log_removed() { return logfile('removed', gutil.colors.red); }
@@ -45,6 +53,8 @@ function angularTask(opts) {
         opts = opts || {
             prod: false
         };
+
+        jade_config.debug = !opts.prod;
 
         var sources = gulp.src(config.scripts);
         var templates = gulp.src(config.templates);
@@ -69,13 +79,13 @@ function angularTask(opts) {
             task = task
                 .pipe(concat('app.js'))
                 .pipe(uglify())
-                .pipe(log_wrote)
+                .pipe(log_wrote())
                 .pipe(gulp.dest(config.js_dest))
         }
 
         var main = gulp.src(config.main)
-            .pipe(jade())
-            .pipe(inject(task))
+            .pipe(jade({data: jade_config}))
+            .pipe(inject(task, {addRootSlash: false, addPrefix: '.', ignorePath: 'app'}))
             .pipe(gulp.dest(__dirname + '/app'))
             .pipe(log_wrote())
 
@@ -99,8 +109,15 @@ gulp.task('clean', function () {
         .pipe(log_removed());
 });
 
-gulp.task('angular:dev', angularTask({prod: false}));
-gulp.task('angular:prod', angularTask({prod: true}));
+gulp.task('angular:dev', ['clean'], angularTask({prod: false}));
+gulp.task('angular:prod', ['clean'], angularTask({prod: true}));
+
+gulp.task('zip', ['clean', 'angular:prod'], function () {
+    return gulp.src('./app/**/*')
+        .pipe(logfile('adding to zip', gutil.colors.green))
+        .pipe(zip('app.nw'))
+        .pipe(gulp.dest('build'));
+})
 
 gulp.task('style', function () {
     return gulp.src(config.styles)

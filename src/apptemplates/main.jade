@@ -1,13 +1,18 @@
 doctype html
-html(ng-app='doceo')
+html(ng-app='app')
 
     head
-        title Doceo v{{ doceo.version }}
+        - if (debug)
+            script(type='text/javascript').
+                var gui = require('nw.gui');
+                gui.Window.get().showDevTools();
+
+        title Doceo v#{package.version}
         meta(charset='utf-8')
 
-    body(ng-include='tpl.main')
+    body(ng-include='"app-main"')
 
-    script(src='./js/vendor/lodash/2.1.4/lodash.min.js')
+    script(src='./js/vendor/lodash/2.4.1/lodash.min.js')
     script(src='./js/vendor/angular/1.2.14/angular.min.js')
     <!-- inject:js -->
     <!-- endinject -->
