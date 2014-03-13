@@ -2,11 +2,6 @@ doctype html
 html(ng-app='app')
 
     head
-        - if (debug)
-            script(type='text/javascript').
-                var gui = require('nw.gui');
-                gui.Window.get().showDevTools();
-
         title Doceo v#{package.version}
         meta(charset='utf-8')
         meta(name="viewport" content="width=device-width")

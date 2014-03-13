@@ -83,7 +83,7 @@ gulp.task('angular', ['clean:js'], function () {
         .pipe(ngcompile(config.appname))
         .pipe(log_processed())
 
-    if (config.debug) {
+    // if (config.debug) {
         // in dev, we want to jslint our files.
         task = task
             .pipe(jshint()) // we only jslint the files that are going to be included
@@ -91,13 +91,13 @@ gulp.task('angular', ['clean:js'], function () {
             // write the files independently
             .pipe(gulp.dest(config.js_dest))
             .pipe(log_wrote());
-    } else {
-        task = task
-            .pipe(concat('app.js'))
-            .pipe(uglify())
-            .pipe(log_wrote())
-            .pipe(gulp.dest(config.js_dest))
-    }
+    // } else {
+    //     task = task
+    //         .pipe(concat('app.js'))
+    //         .pipe(uglify())
+    //         .pipe(log_wrote())
+    //         .pipe(gulp.dest(config.js_dest))
+    // }
 
     return task;
 });
@@ -134,10 +134,10 @@ gulp.task('zip', ['main', 'style', 'angular'], function () {
 
 gulp.task('build', ['main', 'style', 'angular'])
 
-gulp.task('watch', ['style', 'angular'], function () {
+gulp.task('watch', ['main', 'style', 'angular'], function () {
     gulp.watch(config.scripts, ['angular']);
     gulp.watch(config.templates, ['angular']);
-    gulp.watch(config.main, ['angular']);
+    gulp.watch(config.main, ['main']);
     gulp.watch(config.styles, ['style']);
 });
 

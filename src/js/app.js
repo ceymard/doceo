@@ -19,6 +19,7 @@ module.factory('app', function () {
 
 module.run(['nw', 'app', '$optng.gestures', function (nw, app, gestures) {
 
+    var fullscreen = false;
     var style = angular.element('<style>');
     angular.element(document).find('head').append(style);
 
@@ -35,6 +36,10 @@ module.run(['nw', 'app', '$optng.gestures', function (nw, app, gestures) {
         f12: function debug() {
             var gui = require('nw.gui');
             gui.Window.get().showDevTools();
+        },
+        f11: function fullscreen() {
+            var gui = require('nw.gui');
+            gui.Window.get().toggleKioskMode();
         }
     });
 
